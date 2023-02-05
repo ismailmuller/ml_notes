@@ -33,3 +33,17 @@ if isinstance(best_model, RandomForestRegressor):
     plt.yticks(range(train_data.shape[1]), [enc.get_feature_names()[i] for i in indices])
     plt.xlabel("Feature Importance")
     plt.show()
+    
+# Plot the average target values for each category of a feature
+if isinstance(best_model, RandomForestRegressor):
+    feature_index = 0 # Replace with the index of the feature you want to plot
+    feature_categories = enc.categories_[feature_index]
+    feature_name = enc.get_feature_names()[feature_index]
+    avg_target_values = []
+    for i, category in enumerate(feature_categories):
+        mask = np.array(df[feature_name].astype(str) == category)
+        avg_target_values.append(np.mean(df[mask]["target"]))
+    plt.bar(feature_categories, avg_target_values)
+    plt.xlabel("Category")
+    plt.ylabel("Average Target Value")
+    plt.show()
